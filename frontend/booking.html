@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Meal - Smart Food</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-leaf"></i>
+            <h3>Smart Food</h3>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="booking.html" class="nav-item active">
+                <i class="fas fa-calendar"></i>
+                <span>Book Meal</span>
+            </a>
+            <a href="payment.html" class="nav-item">
+                <i class="fas fa-credit-card"></i>
+                <span>Payment</span>
+            </a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <nav class="top-nav">
+            <h2>Book Meal</h2>
+        </nav>
+
+        <div class="content">
+            <div class="page-header">
+                <h1>Book Your Meal</h1>
+                <p>Select meals and date to make your booking</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <div>
+                    <h2 style="margin-bottom: 20px;">Booking Form</h2>
+                    <form id="bookingForm">
+                        <div class="form-group">
+                            <label for="bookingDate"><i class="fas fa-calendar"></i> Select Date</label>
+                            <input type="date" id="bookingDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-utensils"></i> Select Meals</label>
+                            <div style="margin: 15px 0;">
+                                <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                    <input type="checkbox" id="breakfast" class="meal-checkbox" data-price="40" onchange="updateTotal()">
+                                    <label for="breakfast" style="margin: 0 0 0 10px; cursor: pointer;">
+                                        <i class="fas fa-sun" style="color: #F39C12;"></i> Breakfast - ₹40
+                                    </label>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                    <input type="checkbox" id="lunch" class="meal-checkbox" data-price="70" onchange="updateTotal()">
+                                    <label for="lunch" style="margin: 0 0 0 10px; cursor: pointer;">
+                                        <i class="fas fa-cloud-sun" style="color: #E67E22;"></i> Lunch - ₹70
+                                    </label>
+                                </div>
+                                <div style="display: flex; align-items: center;">
+                                    <input type="checkbox" id="dinner" class="meal-checkbox" data-price="70" onchange="updateTotal()">
+                                    <label for="dinner" style="margin: 0 0 0 10px; cursor: pointer;">
+                                        <i class="fas fa-moon" style="color: #3498DB;"></i> Dinner - ₹70
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div style="display: flex; align-items: center;">
+                                <input type="checkbox" id="confirmEating">
+                                <label for="confirmEating" style="margin: 0 0 0 10px; cursor: pointer; font-weight: bold;">
+                                    <i class="fas fa-check-circle"></i> I will definitely eat today
+                                </label>
+                            </div>
+                        </div>
+
+                        <div style="background: #f5f7fa; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 1.2rem; font-weight: bold;">Total Amount:</span>
+                                <span id="totalAmount" style="font-size: 1.5rem; color: #27AE60; font-weight: bold;">₹0</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 1.1rem;">Confirm Booking</button>
+                    </form>
+                </div>
+
+                <div>
+                    <h2 style="margin-bottom: 20px;">My Bookings</h2>
+                    <div id="bookingsList" style="background: #f5f7fa; padding: 20px; border-radius: 5px; min-height: 300px;">
+                        <p style="text-align: center; color: #999;">No bookings yet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <h2>Confirm Your Booking</h2>
+            <div style="margin: 20px 0; padding: 15px; background: #f5f7fa; border-radius: 5px;">
+                <p><strong>Date:</strong> <span id="confirmDate"></span></p>
+                <p><strong>Meals:</strong> <span id="confirmMeals"></span></p>
+                <p><strong>Total Amount:</strong> <span id="confirmTotal" style="color: #27AE60; font-weight: bold;">₹0</span></p>
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button class="btn btn-secondary" onclick="closeConfirmation()">Cancel</button>
+                <button class="btn btn-primary" onclick="submitBooking()">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        document.getElementById('bookingDate').valueAsDate = new Date();
+
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const date = document.getElementById('bookingDate').value;
+            const meals = [];
+            if (document.getElementById('breakfast').checked) meals.push('Breakfast');
+            if (document.getElementById('lunch').checked) meals.push('Lunch');
+            if (document.getElementById('dinner').checked) meals.push('Dinner');
+            
+            if (meals.length === 0) {
+                alert('Please select at least one meal');
+                return;
+            }
+            
+            document.getElementById('confirmDate').textContent = date;
+            document.getElementById('confirmMeals').textContent = meals.join(', ');
+            document.getElementById('confirmTotal').textContent = document.getElementById('totalAmount').textContent;
+            document.getElementById('confirmationModal').classList.add('show');
+        });
+
+        function updateTotal() {
+            let total = 0;
+            document.querySelectorAll('.meal-checkbox:checked').forEach(checkbox => {
+                total += parseInt(checkbox.dataset.price);
+            });
+            document.getElementById('totalAmount').textContent = '₹' + total;
+        }
+
+        function closeConfirmation() {
+            document.getElementById('confirmationModal').classList.remove('show');
+        }
+
+        function submitBooking() {
+            alert('Booking confirmed successfully!');
+            closeConfirmation();
+            document.getElementById('bookingForm').reset();
+            document.getElementById('totalAmount').textContent = '₹0';
+        }
+    </script>
+</body>
+</html>
