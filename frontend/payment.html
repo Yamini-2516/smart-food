@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Smart Food</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-leaf"></i>
+            <h3>Smart Food</h3>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="menu.html" class="nav-item">
+                <i class="fas fa-utensils"></i>
+                <span>Daily Menu</span>
+            </a>
+            <a href="payment.html" class="nav-item active">
+                <i class="fas fa-credit-card"></i>
+                <span>Payment</span>
+            </a>
+            <a href="feedback.html" class="nav-item">
+                <i class="fas fa-comment-dots"></i>
+                <span>Feedback</span>
+            </a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <nav class="top-nav">
+            <h2>Payment</h2>
+        </nav>
+
+        <div class="content">
+            <div class="page-header">
+                <h1>Payment Management</h1>
+                <p>View and manage your payments</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <div>
+                    <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; border-radius: 10px;">
+                        <div style="font-size: 3rem; margin-bottom: 10px;"><i class="fas fa-wallet"></i></div>
+                        <p style="font-size: 0.9rem; opacity: 0.9;">Pending Amount</p>
+                        <div style="font-size: 2.5rem; font-weight: bold; margin: 10px 0;">₹<span id="pendingAmount">850</span></div>
+                        <button class="btn btn-light" onclick="payNow()" style="margin-top: 15px; width: 100%;">Pay Now</button>
+                    </div>
+
+                    <div style="margin-top: 30px;">
+                        <h2 style="margin-bottom: 20px;">Quick Pay</h2>
+                        <div style="display: grid; gap: 10px;">
+                            <button class="btn btn-primary" onclick="selectAmount(500)" style="width: 100%; padding: 12px;">
+                                <i class="fas fa-credit-card"></i> Pay ₹500
+                            </button>
+                            <button class="btn btn-primary" onclick="selectAmount(1000)" style="width: 100%; padding: 12px;">
+                                <i class="fas fa-credit-card"></i> Pay ₹1000
+                            </button>
+                            <button class="btn btn-primary" onclick="selectAmount(null)" style="width: 100%; padding: 12px;">
+                                <i class="fas fa-credit-card"></i> Pay Full Amount
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 style="margin-bottom: 20px;">Payment History</h2>
+                    <div style="background: #f5f7fa; padding: 20px; border-radius: 5px; max-height: 500px; overflow-y: auto;">
+                        <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #ddd;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <p style="font-weight: bold; margin: 0;">Meal Payment</p>
+                                    <p style="color: #999; font-size: 0.9rem; margin: 5px 0 0 0;">June 10, 2026</p>
+                                </div>
+                                <span style="color: #27AE60; font-weight: bold;">₹500</span>
+                            </div>
+                            <span style="display: inline-block; background: #27AE60; color: white; padding: 3px 10px; border-radius: 3px; font-size: 0.8rem; margin-top: 8px;">
+                                <i class="fas fa-check"></i> Paid
+                            </span>
+                        </div>
+
+                        <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #ddd;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <p style="font-weight: bold; margin: 0;">Meal Payment</p>
+                                    <p style="color: #999; font-size: 0.9rem; margin: 5px 0 0 0;">June 5, 2026</p>
+                                </div>
+                                <span style="color: #27AE60; font-weight: bold;">₹350</span>
+                            </div>
+                            <span style="display: inline-block; background: #27AE60; color: white; padding: 3px 10px; border-radius: 3px; font-size: 0.8rem; margin-top: 8px;">
+                                <i class="fas fa-check"></i> Paid
+                            </span>
+                        </div>
+
+                        <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #ddd;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <p style="font-weight: bold; margin: 0;">Meal Payment</p>
+                                    <p style="color: #999; font-size: 0.9rem; margin: 5px 0 0 0;">May 28, 2026</p>
+                                </div>
+                                <span style="color: #E74C3C; font-weight: bold;">₹1000</span>
+                            </div>
+                            <span style="display: inline-block; background: #E74C3C; color: white; padding: 3px 10px; border-radius: 3px; font-size: 0.8rem; margin-top: 8px;">
+                                <i class="fas fa-exclamation"></i> Pending
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 40px; background: #fff3cd; padding: 20px; border-radius: 5px; border-left: 5px solid #FFC107;">
+                <p style="margin: 0; color: #856404;">
+                    <i class="fas fa-info-circle"></i> <strong>Note:</strong> Payments are due by the end of each month. Late payments may incur a fine of ₹50.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <h2>Payment Gateway</h2>
+            <form id="paymentForm" style="margin: 20px 0;">
+                <div class="form-group">
+                    <label for="paymentAmount"><i class="fas fa-money-bill"></i> Amount to Pay</label>
+                    <input type="number" id="paymentAmount" placeholder="Enter amount" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="paymentMethod"><i class="fas fa-credit-card"></i> Payment Method</label>
+                    <select id="paymentMethod" required>
+                        <option value="">Select Payment Method</option>
+                        <option value="upi">UPI</option>
+                        <option value="card">Debit/Credit Card</option>
+                        <option value="netbanking">Net Banking</option>
+                        <option value="wallet">Digital Wallet</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="upiField" style="display: none;">
+                    <label for="upiId">UPI ID</label>
+                    <input type="text" id="upiId" placeholder="yourname@upi">
+                </div>
+
+                <div class="form-group" id="cardField" style="display: none;">
+                    <label for="cardNumber">Card Number</label>
+                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456">
+                </div>
+            </form>
+
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button class="btn btn-secondary" onclick="closePaymentModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="processPayment()">Pay Now</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        document.getElementById('paymentMethod').addEventListener('change', function() {
+            document.getElementById('upiField').style.display = this.value === 'upi' ? 'block' : 'none';
+            document.getElementById('cardField').style.display = this.value === 'card' ? 'block' : 'none';
+        });
+
+        function payNow() {
+            document.getElementById('paymentAmount').value = document.getElementById('pendingAmount').textContent;
+            document.getElementById('paymentModal').classList.add('show');
+        }
+
+        function selectAmount(amount) {
+            if (amount === null) {
+                document.getElementById('paymentAmount').value = document.getElementById('pendingAmount').textContent;
+            } else {
+                document.getElementById('paymentAmount').value = amount;
+            }
+            document.getElementById('paymentModal').classList.add('show');
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').classList.remove('show');
+        }
+
+        function processPayment() {
+            const amount = document.getElementById('paymentAmount').value;
+            const method = document.getElementById('paymentMethod').value;
+
+            if (!amount || !method) {
+                alert('Please fill all fields');
+                return;
+            }
+
+            alert('Payment of ₹' + amount + ' processed successfully via ' + method + '!');
+            closePaymentModal();
+        }
+    </script>
+</body>
+</html>
