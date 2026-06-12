@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Menu - Smart Food</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-leaf"></i>
+            <h3>Smart Food</h3>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="menu.html" class="nav-item active">
+                <i class="fas fa-utensils"></i>
+                <span>Daily Menu</span>
+            </a>
+            <a href="booking.html" class="nav-item">
+                <i class="fas fa-calendar"></i>
+                <span>Book Meal</span>
+            </a>
+            <a href="payment.html" class="nav-item">
+                <i class="fas fa-credit-card"></i>
+                <span>Payment</span>
+            </a>
+            <a href="feedback.html" class="nav-item">
+                <i class="fas fa-comment-dots"></i>
+                <span>Feedback</span>
+            </a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <nav class="top-nav">
+            <h2>Daily Menu</h2>
+        </nav>
+
+        <div class="content">
+            <div class="page-header">
+                <h1>Today's Menu</h1>
+                <p id="currentDate">Menu for today</p>
+            </div>
+
+            <div style="margin-bottom: 40px;">
+                <h2><i class="fas fa-sun" style="color: #F39C12;"></i> Breakfast - ₹40</h2>
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <h3>Idli & Sambar</h3>
+                        <p>South Indian special</p>
+                        <p style="color: #27AE60; font-weight: bold;">₹40</p>
+                        <button class="btn btn-primary" onclick="bookMeal('Idli & Sambar', 40)">Book Now</button>
+                    </div>
+                    <div class="card">
+                        <h3>Poha & Tea</h3>
+                        <p>Light breakfast option</p>
+                        <p style="color: #27AE60; font-weight: bold;">₹40</p>
+                        <button class="btn btn-primary" onclick="bookMeal('Poha & Tea', 40)">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 40px;">
+                <h2><i class="fas fa-cloud-sun" style="color: #E67E22;"></i> Lunch - ₹70</h2>
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <h3>Paneer Butter Masala</h3>
+                        <p>Creamy paneer curry with rice</p>
+                        <p style="color: #27AE60; font-weight: bold;">₹70</p>
+                        <button class="btn btn-primary" onclick="bookMeal('Paneer Butter Masala', 70)">Book Now</button>
+                    </div>
+                    <div class="card">
+                        <h3>Dal Makhani & Rice</h3>
+                        <p>Lentil preparation with basmati rice</p>
+                        <p style="color: #27AE60; font-weight: bold;">₹70</p>
+                        <button class="btn btn-primary" onclick="bookMeal('Dal Makhani & Rice', 70)">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2><i class="fas fa-moon" style="color: #3498DB;"></i> Dinner - ₹70</h2>
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <h3>Chicken Tikka Masala</h3>
+                        <p>Spiced chicken curry</p>
+                        <p style="color: #27AE60; font-weight: bold;">₹70</p>
+                        <button class="btn btn-primary" onclick="bookMeal('Chicken Tikka Masala', 70)">Book Now</button>
+                    </div>
+                    <div class="card">
+                        <h3>Vegetable Biryani</h3>
+                        <p>Fragrant rice dish with vegetables</p>
+                        <p style="color: #27AE60; font-weight: bold;">₹70</p>
+                        <button class="btn btn-primary" onclick="bookMeal('Vegetable Biryani', 70)">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDate();
+        });
+
+        function updateDate() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const today = new Date();
+            document.getElementById('currentDate').textContent = 'Menu for ' + today.toLocaleDateString('en-US', options);
+        }
+
+        function bookMeal(mealName, price) {
+            localStorage.setItem('selectedMealName', mealName);
+            localStorage.setItem('selectedMealPrice', price);
+            window.location.href = 'booking.html';
+        }
+    </script>
+</body>
+</html>
